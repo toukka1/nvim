@@ -14,5 +14,6 @@ return require('packer').startup(function(use)
   }
 
   use "EdenEast/nightfox.nvim"
-
+  use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
+  use ('tpope/vim-fugitive')
   end)

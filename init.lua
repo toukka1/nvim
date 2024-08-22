@@ -1,3 +1,4 @@
 require("toukka")
-print("hello")
+vim.wo.number = true
 vim.wo.relativenumber = true
+vim.wo.signcolumn = "number"

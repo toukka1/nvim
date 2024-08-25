@@ -1,2 +1,3 @@
+require("toukka.set")
 require("toukka.remap")
-vim.cmd("colorscheme nightfox")
+require("toukka.plugins")

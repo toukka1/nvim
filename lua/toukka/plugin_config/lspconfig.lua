@@ -13,6 +13,7 @@ return {
                 ensure_installed = {
                     "lua_ls",
                     "rust_analyzer",
+                    "clangd",
                 },
             })
         end
@@ -34,6 +35,13 @@ return {
             }
             require("lspconfig").rust_analyzer.setup {
                 capabilities = capabilities
+            }
+            require("lspconfig").clangd.setup{
+                capabilities = capabilities,
+                cmd = { "clangd" },
+                filetypes = {
+                    "c", "cpp", "objc", "objcpp", "cuda", "proto"
+                }
             }
         end
     },

@@ -14,6 +14,7 @@ return {
                     "lua_ls",
                     "rust_analyzer",
                     "clangd",
+                    "ts_ls",
                 },
             })
         end
@@ -42,6 +43,9 @@ return {
                 filetypes = {
                     "c", "cpp", "objc", "objcpp", "cuda", "proto"
                 }
+            }
+            require("lspconfig").ts_ls.setup{
+                capabilities = capabilities
             }
         end
     },

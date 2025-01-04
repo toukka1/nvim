@@ -12,4 +12,7 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 -- Preserve pasted text
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
+-- Put cut out characters in another register
+vim.keymap.set("n", "x", '"_x')
+
 vim.keymap.set("i", "<C-c>", "<Esc>")

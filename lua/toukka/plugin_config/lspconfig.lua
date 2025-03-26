@@ -24,6 +24,7 @@ return {
         "neovim/nvim-lspconfig",
         config = function()
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
             require"lspconfig".lua_ls.setup {
                 capabilities = capabilities,
                 settings = {
@@ -39,7 +40,10 @@ return {
             }
             require("lspconfig").clangd.setup{
                 capabilities = capabilities,
-                cmd = { "clangd" },
+                cmd = {
+                    "clangd",
+                    "--offset-encoding=utf-16",
+                },
                 filetypes = {
                     "c", "cpp", "objc", "objcpp", "cuda", "proto"
                 }

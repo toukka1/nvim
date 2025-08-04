@@ -1,1 +1,1 @@
-require("toukka")
+require("setup")

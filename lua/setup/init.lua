@@ -1,7 +1,7 @@
-require("setup.set")
 require("setup.colors")
 require("setup.treesitter")
 require("setup.lspconfig")
 require("setup.telescope")
 require("setup.commentary")
 require("setup.copilot")
+require("setup.set")

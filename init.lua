@@ -15,6 +15,7 @@ vim.opt.expandtab = true
 vim.opt.wrap = false
 vim.opt.scrolloff = 8
 vim.opt.incsearch = true
+vim.opt.ignorecase = true
 vim.opt.winborder = "rounded"
 vim.opt.pumheight = 15
 
@@ -70,7 +71,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 vim.cmd("set completeopt+=noselect")
 
 require("catppuccin").setup({ transparent_background = true })
-vim.cmd("colorscheme catppuccin")
+vim.cmd("colorscheme catppuccin-latte")
 
 require('telescope').setup({})
 local builtin = require('telescope.builtin')

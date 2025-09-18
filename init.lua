@@ -69,6 +69,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end,
 })
 vim.cmd("set completeopt+=noselect")
+vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
 
 require("catppuccin").setup({ transparent_background = true })
 vim.cmd("colorscheme catppuccin-latte")

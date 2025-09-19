@@ -58,7 +58,7 @@ vim.pack.add({
 })
 
 require("mason").setup()
-vim.lsp.enable({ "lua_ls", "clangd" })
+vim.lsp.enable({ "lua_ls", "clangd", "robotcode" })
 vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format)
 vim.api.nvim_create_autocmd('LspAttach', {
     callback = function(ev)
@@ -81,6 +81,6 @@ vim.keymap.set('n', '<C-f>', builtin.live_grep, {})
 vim.keymap.set('v', '<C-f>', 'y<ESC>:Telescope live_grep default_text=<c-r>0<CR>', {})
 
 require("nvim-treesitter.configs").setup({
-    ensure_installed = { "javascript", "typescript", "c", "lua", "rust", "bash", "python" },
+    ensure_installed = { "javascript", "typescript", "c", "lua", "rust", "bash", "python", "robot" },
     highlight = { enable = true }
 })

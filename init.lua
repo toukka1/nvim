@@ -58,7 +58,7 @@ vim.pack.add({
 })
 
 require("mason").setup()
-vim.lsp.enable({ "lua_ls", "clangd", "robotcode", "pylsp" })
+vim.lsp.enable({ "lua_ls", "clangd", "robotcode", "pylsp", "rust_analyzer" })
 vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format)
 vim.api.nvim_create_autocmd('LspAttach', {
     callback = function(ev)

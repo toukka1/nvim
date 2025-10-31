@@ -67,7 +67,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         end
     end,
 })
-vim.cmd("set completeopt+=noselect")
+vim.cmd("set completeopt=menu,menuone,noselect")
 vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
 
 require("catppuccin").setup({ transparent_background = true })

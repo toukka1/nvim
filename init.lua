@@ -68,7 +68,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end,
 })
 vim.cmd("set completeopt=menu,menuone,noselect")
-vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
 
 require("catppuccin").setup({ transparent_background = true })
 vim.cmd("colorscheme catppuccin-latte")
@@ -76,8 +75,9 @@ vim.cmd("colorscheme catppuccin-latte")
 require('telescope').setup({})
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<C-s>', builtin.find_files, {})
-vim.keymap.set('n', '<C-p>', builtin.git_files, {})
 vim.keymap.set('n', '<C-f>', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>d', builtin.lsp_definitions, {})
+vim.keymap.set('n', '<leader>r', builtin.lsp_references, {})
 vim.keymap.set('v', '<C-f>', 'y<ESC>:Telescope live_grep default_text=<c-r>0<CR>', {})
 
 require("nvim-treesitter.configs").setup({

@@ -41,10 +41,9 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 -- Preserve pasted text
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
+
 -- Put cut out characters in another register
 vim.keymap.set("n", "x", '"_x')
-
-vim.keymap.set("i", "<C-c>", "<Esc>")
 
 -- PLUGINS
 vim.pack.add({
@@ -72,8 +71,17 @@ vim.cmd("set completeopt=menu,menuone,noselect")
 require("catppuccin").setup({ transparent_background = true })
 vim.cmd("colorscheme catppuccin-latte")
 
-require('telescope').setup({})
 local builtin = require('telescope.builtin')
+local actions = require('telescope.actions')
+require('telescope').setup({
+    defaults = {
+        mappings = {
+            i = {
+                ["<ESC>"] = actions.close,
+            },
+        },
+    },
+})
 vim.keymap.set('n', '<C-s>', builtin.find_files, {})
 vim.keymap.set('n', '<C-f>', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>d', builtin.lsp_definitions, {})

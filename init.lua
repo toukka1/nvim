@@ -57,6 +57,15 @@ vim.pack.add({
 })
 
 require("mason").setup()
+vim.lsp.config("rust_analyzer", {
+  settings = {
+    ["rust-analyzer"] = {
+      procMacro = {
+        enable = false,
+      },
+    },
+  },
+})
 vim.lsp.enable({ "lua_ls", "clangd", "robotcode", "pylsp", "rust_analyzer", "ts_ls" })
 vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format)
 vim.api.nvim_create_autocmd('LspAttach', {

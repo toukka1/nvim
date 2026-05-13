@@ -14,15 +14,20 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.wrap = false
 vim.opt.scrolloff = 8
+vim.opt.sidescrolloff = 8
 vim.opt.incsearch = true
 vim.opt.ignorecase = true
+vim.opt.smartcase = true
 vim.opt.winborder = "rounded"
 vim.opt.pumheight = 15
+
+vim.opt.path:append("**")
+vim.opt.wildignore:append {"*.venv/*", "*/.git/*", "*/target/*", "*/__pycache__/*"}
 
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
-vim.o.undofile = true
+vim.opt.undofile = true
 
 vim.opt.clipboard:append("unnamedplus")
 
@@ -38,6 +43,10 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
+-- Navigate quickfix list
+vim.keymap.set("n", "<C-k>", ":cp<CR>")
+vim.keymap.set("n", "<C-j>", ":cn<CR>")
+
 -- Preserve pasted text
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
@@ -49,56 +58,31 @@ vim.keymap.set("n", "x", '"_x')
 -- PLUGINS
 vim.pack.add({
     { src = "https://github.com/catppuccin/nvim" },
-    { src = "https://github.com/neovim/nvim-lspconfig" },
-    { src = "https://github.com/nvim-lua/plenary.nvim" },
-    { src = "https://github.com/nvim-telescope/telescope.nvim" },
-    { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
-    { src = "https://github.com/mason-org/mason.nvim" },
+    { src = "https://github.com/tpope/vim-dispatch" },
 })
 
-require("mason").setup()
-vim.lsp.config("rust_analyzer", {
-  settings = {
-    ["rust-analyzer"] = {
-      procMacro = {
-        enable = false,
-      },
-    },
-  },
-})
-vim.lsp.enable({ "lua_ls", "clangd", "robotcode", "pylsp", "rust_analyzer", "ts_ls" })
-vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format)
-vim.api.nvim_create_autocmd('LspAttach', {
-    callback = function(ev)
-        local client = vim.lsp.get_client_by_id(ev.data.client_id)
-        if client:supports_method('textDocument/completion') then
-            vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
-        end
-    end,
-})
-vim.cmd("set completeopt=menu,menuone,noselect")
+vim.opt.completeopt = "menu,menuone,noselect"
 
 require("catppuccin").setup({ transparent_background = true })
 vim.cmd("colorscheme catppuccin-latte")
 
-local builtin = require('telescope.builtin')
-local actions = require('telescope.actions')
-require('telescope').setup({
-    defaults = {
-        mappings = {
-            i = {
-                ["<ESC>"] = actions.close,
-            },
-        },
-    },
+vim.opt.grepprg = "rg --vimgrep --smart-case"
+vim.api.nvim_create_user_command("G", function(opts)
+  vim.cmd("silent grep " .. vim.fn.shellescape(opts.args))
+  vim.cmd("cw")
+end, {
+  nargs = "+",
 })
-vim.keymap.set('n', '<C-s>', builtin.find_files, {})
-vim.keymap.set('n', '<C-f>', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>d', builtin.lsp_definitions, {})
-vim.keymap.set('n', '<leader>r', builtin.lsp_references, {})
-vim.keymap.set('v', '<C-f>', 'y<ESC>:Telescope live_grep default_text=<c-r>0<CR>', {})
 
-require("nvim-treesitter.configs").setup({
-    ensure_installed = { "javascript", "typescript", "c", "lua", "rust", "bash", "python", "robot" },
-    highlight = { enable = true }
+local makeprg_by_ft = {
+  rust = "cargo build",
+  c = "make -j32",
+  cpp = "make -j32",
+}
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = vim.tbl_keys(makeprg_by_ft),
+  callback = function(args)
+    vim.opt_local.makeprg = makeprg_by_ft[args.match]
+  end,
 })
